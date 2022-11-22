@@ -38,12 +38,20 @@ app.patch('/odjeca/:id', async (req, res) => {
     let data = req.body = req.body
     let id = req.params.id
     let db = await connect()
-    let result = await db.collection('odejca').updateOne(
+    let result = await db.collection('odjeca').updateOne(
         {
-            _id: mongo.ObjectId(id)
+            newPrice: mongo.ObjectPrice(price)
         },
         { $set: data, }
     )
+    if (doc) {
+        res.json({ 'status': 'OK', 'message': 'Item updated.' })
+    }
+    else {
+        res.json({
+            'status': 'Failed'
+        })
+    }
     res.json(result)
 })
 
