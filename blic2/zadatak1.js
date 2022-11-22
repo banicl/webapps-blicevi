@@ -33,3 +33,30 @@ app.post('/odjeca', async (req, res) => {
         res.json({ 'status': 'Failed' })
     }
 })
+
+app.patch('/odjeca/:id', async (req, res) => {
+    let data = req.body = req.body
+    let id = req.params.id
+    let db = await connect()
+    let result = await db.collection('odejca').updateOne(
+        {
+            _id: mongo.ObjectId(id)
+        },
+        { $set: data, }
+    )
+    res.json(result)
+})
+
+app.delete('/odjeca/:id', async (req, res) => {
+    let id = req.params.id
+    let db = await connect()
+    let result = await db.collection('odjeca').deleteOne(
+        {
+            _id: mongo.ObjectId(id)
+        })
+    if (result.deleteCount === 1) {
+        res.json({ 'status:': 'OK' })
+    } else {
+        res.json({ 'status': 'Failed' })
+    }
+})
